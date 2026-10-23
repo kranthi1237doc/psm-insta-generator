@@ -13,16 +13,17 @@
                 extend: {
                     colors: {
                         medical: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            900: '#14532d',
+                            50: '#fdf4f8',
+                            100: '#fce7f3',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            900: '#831843',
                         },
-                        teal: {
-                            500: '#14b8a6',
-                            600: '#0d9488',
+                        brand: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
                         }
                     }
                 }
@@ -35,47 +36,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas library for slide downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .slide-card {
-            aspect-ratio: 4 / 5;
-            max-width: 420px;
+            aspect-ratio: 1 / 1;
+            max-width: 440px;
             margin: 0 auto;
-        }
-        @keyframes pulse-subtle {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        .animate-pulse-subtle {
-            animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30">
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
-                    <i class="fa-solid fa-stethoscope text-lg"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-purple-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">PSM InstaPrep</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">NEET PG • INI-CET • FMGE Daily MCQ Studio</p>
+                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">PSM InstaPrep</h1>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">NEET PG • INI-CET • FMGE Carousel Creator</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-3">
-                <button id="api-config-trigger" class="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition flex items-center space-x-2" title="Configure API Key">
-                    <i class="fa-solid fa-key text-emerald-600 dark:text-emerald-400"></i>
+                <button id="api-config-trigger" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center space-x-2" title="Configure API Key">
+                    <i class="fa-solid fa-key text-pink-600 dark:text-pink-400"></i>
                     <span class="hidden sm:inline" id="api-status-text">API Key Set</span>
                 </button>
-                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="Toggle Theme">
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Toggle Theme">
                     <i class="fa-solid fa-moon dark:hidden"></i>
                     <i class="fa-solid fa-sun hidden dark:block"></i>
                 </button>
-                <button id="nav-history" class="px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-sm font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition flex items-center space-x-2">
+                <button id="nav-history" class="px-3 py-2 rounded-xl bg-pink-50 dark:bg-pink-950/40 text-pink-600 dark:text-pink-400 text-xs font-semibold hover:bg-pink-100 dark:hover:bg-pink-900/50 transition flex items-center space-x-2">
                     <i class="fa-solid fa-bookmark"></i>
                     <span class="hidden sm:inline">Saved Vault</span>
                 </button>
@@ -84,26 +80,26 @@
     </header>
 
     <!-- API Key Modal -->
-    <div id="api-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+    <div id="api-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-key text-emerald-600 dark:text-emerald-400"></i>
+                    <i class="fa-solid fa-key text-pink-600 dark:text-pink-400"></i>
                     <h3 class="font-bold text-base">Gemini API Key Configuration</h3>
                 </div>
-                <button id="close-api-modal" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 transition">
+                <button id="close-api-modal" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Enter your free Google AI Studio Gemini API key below. It is safely stored in your browser's local storage (`localStorage`) so you only need to enter it once.
+                Enter your Google AI Studio Gemini API key below. It is stored securely in your browser's local storage so you only need to enter it once.
             </p>
             <div class="space-y-1.5">
                 <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">API Key</label>
-                <input type="password" id="api-key-input" placeholder="AIzaSy..." class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="password" id="api-key-input" placeholder="AIzaSy..." class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-800 dark:text-slate-100">
             </div>
             <div class="flex items-center justify-end space-x-2 pt-2">
-                <button id="save-api-key-btn" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition shadow-sm">Save & Remember Key</button>
+                <button id="save-api-key-btn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold text-xs transition shadow-md shadow-pink-500/20">Save & Remember Key</button>
             </div>
         </div>
     </div>
@@ -111,170 +107,174 @@
     <!-- Main Content Area -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Left Panel: Generator Controls (5 Cols) -->
+        <!-- Left Panel: Controls (5 Cols) -->
         <section class="lg:col-span-5 space-y-6">
-            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 space-y-6">
-                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-4">
-                    <h2 class="text-base font-semibold flex items-center space-x-2">
-                        <i class="fa-solid fa-sliders text-emerald-600 dark:text-emerald-400"></i>
-                        <span>Content Configuration</span>
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider flex items-center space-x-2 text-slate-800 dark:text-slate-200">
+                        <i class="fa-solid fa-sliders text-pink-600 dark:text-pink-400"></i>
+                        <span>Content Generator</span>
                     </h2>
-                    <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-medium">AI Powered</span>
+                    <span class="text-[11px] px-2.5 py-1 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 font-semibold">Gemini Flash</span>
                 </div>
 
                 <!-- Topic Selector -->
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">PSM Topic of Interest</label>
-                    <select id="psm-topic" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <option value="Biostatistics & Epidemiology">📊 Biostatistics & Epidemiology</option>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Community Medicine Topic</label>
+                    <select id="psm-topic" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-800 dark:text-slate-100 font-medium">
+                        <option value="Biostatistics & Sample Size / Tests of Significance">📊 Biostatistics & Tests of Significance</option>
                         <option value="Screening of Diseases & Natural History">🔍 Screening of Diseases & Natural History</option>
-                        <option value="National Health Programs (NHP)">🇮🇳 National Health Programs (NHP)</option>
-                        <option value="Maternal & Child Health (RMNCH+A)">👶 Maternal & Child Health (RMNCH+A)</option>
-                        <option value="Occupational Health & Environment">🏭 Occupational Health & Environment</option>
-                        <option value="Communicable & Non-Communicable Diseases">🦠 Communicable & Non-Communicable Diseases</option>
-                        <option value="Nutrition & Health">🥗 Nutrition & Health</option>
-                        <option value="Healthcare Delivery System & Biomedical Waste Management">🏥 Healthcare Delivery & BMW Management</option>
-                        <option value="Demography & Family Planning">📈 Demography & Family Planning</option>
+                        <option value="National Health Programs (NHP) - RCH, National Health Mission">🇮🇳 National Health Programs (NHP)</option>
+                        <option value="Epidemiology - Study Designs, Bias & Confounding">📈 Epidemiology (Study Designs & Bias)</option>
+                        <option value="Immunization Schedule & Cold Chain">💉 Immunization Schedule & Cold Chain</option>
+                        <option value="Communicable Diseases - Vector Borne, Zoonotic & Waterborne">🦠 Communicable Diseases</option>
+                        <option value="Maternal & Child Health (RMNCH+A, IMNCI, Milestones)">👶 Maternal & Child Health</option>
+                        <option value="Occupational Health & Environmental Sanitation">🏭 Occupational & Environmental Health</option>
+                        <option value="Biomedical Waste Management & Healthcare Delivery">🏥 BMW Management & Health Systems</option>
+                        <option value="Nutrition & Deficiency Disorders">🥗 Nutrition & Deficiency Disorders</option>
                     </select>
                 </div>
 
                 <!-- Exam Focus -->
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Target Examination Focus</label>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Target Exam Pattern</label>
                     <div class="grid grid-cols-3 gap-2">
-                        <button type="button" data-exam="NEET PG" class="exam-btn px-3 py-2 rounded-xl border border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold transition text-center">NEET PG</button>
-                        <button type="button" data-exam="INI-CET" class="exam-btn px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold transition text-center">INI-CET</button>
-                        <button type="button" data-exam="FMGE" class="exam-btn px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold transition text-center">FMGE</button>
+                        <button type="button" data-exam="NEET PG" class="exam-btn px-3 py-2.5 rounded-xl border border-pink-500 bg-pink-50 dark:bg-pink-950/50 text-pink-700 dark:text-pink-300 text-xs font-bold transition text-center shadow-sm">NEET PG</button>
+                        <button type="button" data-exam="INI-CET" class="exam-btn px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold transition text-center">INI-CET</button>
+                        <button type="button" data-exam="FMGE" class="exam-btn px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold transition text-center">FMGE</button>
                     </div>
                 </div>
 
-                <!-- Question Difficulty/Style -->
+                <!-- Question Style -->
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Question Style & Yield</label>
-                    <select id="q-style" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <option value="Clinical Vignette / Scenario Based">Clinical Vignette / Scenario Based (High Yield)</option>
-                        <option value="Direct Fact / Data / Statistic Based">Direct Fact / Data / Statistic Based</option>
-                        <option value="Assertion & Reason / Statement Based">Assertion & Reason / Statement Based</option>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Question Complexity & Style</label>
+                    <select id="q-style" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-800 dark:text-slate-100 font-medium">
+                        <option value="Clinical Vignette / Patient Scenario">Clinical Vignette / Patient Scenario (High Yield)</option>
+                        <option value="Direct Fact / Data / Statistic / Years">Direct Fact / Data / Statistic / Years</option>
+                        <option value="Assertion & Reason / Multi-Statement">Assertion & Reason / Multi-Statement</option>
                     </select>
                 </div>
 
-                <!-- Custom Prompt Note (Optional) -->
+                <!-- Custom Keyword Note -->
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Specific Sub-topic / Keyword (Optional)</label>
-                    <input type="text" id="custom-keyword" placeholder="e.g. Odds Ratio, Cold Chain, P-value..." class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Specific Sub-topic / Keyword (Optional)</label>
+                    <input type="text" id="custom-keyword" placeholder="e.g. Odds Ratio, BCG vaccine, Iceberg phenomenon..." class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 text-slate-800 dark:text-slate-100">
                 </div>
 
                 <!-- Generate Action Button -->
-                <button id="generate-btn" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-lg shadow-emerald-600/25 hover:from-emerald-500 hover:to-teal-500 transition flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <button id="generate-btn" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-pink-600/25 hover:opacity-95 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
                     <span>Generate Instagram Post Slides</span>
                 </button>
             </div>
 
-            <!-- Tips Card -->
-            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-800 dark:to-slate-800/80 rounded-2xl p-5 border border-emerald-100 dark:border-slate-700 space-y-3">
-                <div class="flex items-center space-x-2 text-emerald-700 dark:text-emerald-400 font-semibold text-sm">
-                    <i class="fa-solid fa-lightbulb"></i>
-                    <span>Creator Growth Strategy</span>
+            <!-- Creator Strategy Note -->
+            <div class="bg-gradient-to-br from-purple-50/60 to-pink-50/60 dark:from-slate-900 dark:to-slate-900/80 rounded-3xl p-5 border border-purple-100 dark:border-slate-800 space-y-2">
+                <div class="flex items-center space-x-2 text-purple-700 dark:text-purple-400 font-bold text-xs">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Growth Tip for Medical Pages</span>
                 </div>
-                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Posting daily 3-slide carousels builds high engagement and saves storage for medical aspirants. Slide 1 hooks them with a realistic clinical question, Slide 2 rewards them with the core concept, and Slide 3 masters distractor elimination plus an exam pearl!
+                <p class="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Post 3-slide carousels daily. Slide 1 engages them with an active recall question, Slide 2 rewards them instantly with the core concept, and Slide 3 masters distractor elimination plus an exam pearl!
                 </p>
             </div>
         </section>
 
-        <!-- Right Panel: Slide Preview & Copy Tools (7 Cols) -->
+        <!-- Right Panel: Slide Studio & Export (7 Cols) -->
         <section class="lg:col-span-7 space-y-6">
             
-            <!-- Placeholder / Loading State -->
-            <div id="loading-state" class="hidden bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-12 text-center space-y-4">
-                <div class="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto text-2xl animate-spin">
+            <!-- Loading State -->
+            <div id="loading-state" class="hidden bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-16 text-center space-y-4">
+                <div class="w-16 h-16 rounded-full bg-pink-50 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 flex items-center justify-center mx-auto text-2xl animate-spin">
                     <i class="fa-solid fa-circle-notch"></i>
                 </div>
                 <div class="space-y-1">
-                    <h3 class="font-semibold text-base">Generating High-Yield PSM Content...</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Consulting AI with latest NBEMS / NEET PG exam patterns</p>
+                    <h3 class="font-bold text-sm">Consulting AI for High-Yield PSM Content...</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Synthesizing latest NBEMS standards & Park's Textbook pearls</p>
                 </div>
             </div>
 
             <!-- Initial Empty State -->
-            <div id="empty-state" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-12 text-center space-y-4">
-                <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 flex items-center justify-center mx-auto text-2xl">
+            <div id="empty-state" class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-16 text-center space-y-4">
+                <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto text-2xl">
                     <i class="fa-solid fa-images"></i>
                 </div>
                 <div class="space-y-1 max-w-sm mx-auto">
-                    <h3 class="font-semibold text-base">No Slide Generated Yet</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Select your topic and exam focus on the left, then click Generate to create your ready-to-post Instagram carousel.</p>
+                    <h3 class="font-bold text-sm">Ready to Create Content</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Select your topic on the left and click generate to create your 3-slide Instagram carousel instantly.</p>
                 </div>
             </div>
 
-            <!-- Result Container (Hidden by default) -->
+            <!-- Result Container -->
             <div id="result-container" class="hidden space-y-6">
                 
-                <!-- Carousel Header / Slide Navigation -->
-                <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                    <div class="flex items-center space-x-2">
-                        <button onclick="switchSlide(1)" id="tab-btn-1" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white transition shadow-sm">Slide 1: Question</button>
-                        <button onclick="switchSlide(2)" id="tab-btn-2" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Slide 2: Answer</button>
-                        <button onclick="switchSlide(3)" id="tab-btn-3" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Slide 3: Distractors</button>
+                <!-- Slide Navigation & Action Header -->
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 sm:pb-0">
+                        <button onclick="switchSlide(1)" id="tab-btn-1" class="slide-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-pink-600 text-white transition shadow-sm whitespace-nowrap">Slide 1: Question</button>
+                        <button onclick="switchSlide(2)" id="tab-btn-2" class="slide-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition whitespace-nowrap">Slide 2: Answer</button>
+                        <button onclick="switchSlide(3)" id="tab-btn-3" class="slide-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition whitespace-nowrap">Slide 3: Distractors</button>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button id="save-vault-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-xs font-medium transition flex items-center space-x-1.5" title="Save to Vault">
+                        <button id="save-vault-btn" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition flex items-center space-x-1.5" title="Save to Vault">
                             <i class="fa-regular fa-bookmark"></i>
                             <span>Save</span>
                         </button>
-                        <button id="regenerate-slide-btn" class="px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-medium hover:bg-emerald-100 transition flex items-center space-x-1.5">
+                        <button id="regenerate-slide-btn" class="px-3 py-2 rounded-xl bg-pink-50 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-semibold hover:bg-pink-100 transition flex items-center space-x-1.5">
                             <i class="fa-solid fa-rotate"></i>
                             <span>Refresh</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Instagram Slide Canvas (Visual Simulation) -->
-                <div class="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl text-white slide-card flex flex-col justify-between overflow-hidden border border-slate-700">
+                <!-- Instagram Slide Canvas (Captured by html2canvas) -->
+                <div id="instagram-slide-canvas" class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-purple-950 rounded-3xl p-6 sm:p-8 shadow-2xl text-white slide-card flex flex-col justify-between overflow-hidden border border-slate-800">
                     
-                    <!-- Decorative background glow -->
-                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <!-- Decorative glow -->
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <!-- Slide Top Branding Header -->
+                    <!-- Top Slide Header -->
                     <div class="flex items-center justify-between z-10">
-                        <div class="flex items-center space-x-2 bg-slate-800/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700">
-                            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                            <span id="badge-exam" class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">NEET PG / FMGE</span>
+                        <div class="flex items-center space-x-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-800">
+                            <div class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></div>
+                            <span id="badge-exam" class="text-[11px] font-bold uppercase tracking-wider text-pink-400">NEET PG • High Yield</span>
                         </div>
-                        <span id="slide-counter" class="text-xs font-semibold text-slate-400 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">Slide 1 / 3</span>
+                        <span id="slide-counter" class="text-[11px] font-semibold text-slate-400 bg-slate-900/80 px-3 py-1.5 rounded-full border border-slate-800">Slide 1 / 3</span>
                     </div>
 
-                    <!-- Slide Body Content -->
-                    <div id="slide-content-view" class="my-auto py-4 z-10 space-y-4">
+                    <!-- Dynamic Slide Content Body -->
+                    <div id="slide-content-view" class="my-auto py-3 z-10 space-y-3">
                         <!-- Populated by JS -->
                     </div>
 
-                    <!-- Slide Footer Branding -->
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-[11px] text-slate-400 z-10">
-                        <span class="font-medium text-slate-300">@PSM_InstaPrep</span>
-                        <span>Swipe for Explanation ➡️</span>
+                    <!-- Bottom Slide Branding -->
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 z-10">
+                        <span class="font-bold text-slate-300">@PSM_InstaPrep</span>
+                        <span id="slide-action-hint">Swipe for explanation ➡️</span>
                     </div>
                 </div>
 
-                <!-- Copy & Export Toolkit -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                <!-- Direct Download Slide Button -->
+                <button id="download-slide-btn" class="w-full py-3 px-4 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 border border-slate-700 text-white font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-download text-pink-400"></i>
+                    <span id="download-btn-text">📥 Download Current Slide (PNG)</span>
+                </button>
+
+                <!-- Instagram Caption & Text Export Toolkit -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-semibold text-sm flex items-center space-x-2">
-                            <i class="fa-solid fa-clipboard-check text-emerald-600 dark:text-emerald-400"></i>
-                            <span>Instagram Caption & Slide Text Export</span>
+                        <h3 class="font-bold text-xs uppercase tracking-wider flex items-center space-x-2 text-slate-800 dark:text-slate-200">
+                            <i class="fa-solid fa-clipboard-check text-pink-600 dark:text-pink-400"></i>
+                            <span>Instagram Caption & Post Text</span>
                         </h3>
-                        <button id="copy-all-btn" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
+                        <button id="copy-all-btn" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold transition flex items-center space-x-2 shadow-sm">
                             <i class="fa-solid fa-copy"></i>
-                            <span>Copy Full Post Content</span>
+                            <span>Copy Full Text</span>
                         </button>
                     </div>
 
-                    <!-- Textarea for review / copy -->
-                    <div class="relative">
-                        <textarea id="export-text-area" rows="6" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-4 text-xs font-mono text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y" readonly></textarea>
-                    </div>
+                    <textarea id="export-text-area" rows="6" class="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-4 text-xs font-mono text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 resize-y" readonly></textarea>
                 </div>
 
             </div>
@@ -284,14 +284,14 @@
     </main>
 
     <!-- Saved Vault Modal -->
-    <div id="vault-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+    <div id="vault-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-bookmark text-emerald-600 dark:text-emerald-400"></i>
+                    <i class="fa-solid fa-bookmark text-pink-600 dark:text-pink-400"></i>
                     <h3 class="font-bold text-base">Saved Questions Vault</h3>
                 </div>
-                <button id="close-vault-btn" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 transition">
+                <button id="close-vault-btn" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -302,8 +302,8 @@
     </div>
 
     <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-2xl font-medium text-xs flex items-center space-x-3">
-        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-sm"></i>
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-2xl font-bold text-xs flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-pink-400 dark:text-pink-600 text-sm"></i>
         <span id="toast-msg">Copied successfully!</span>
     </div>
 
@@ -366,11 +366,11 @@
         examBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 examBtns.forEach(b => {
-                    b.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-300');
-                    b.classList.add('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+                    b.classList.remove('border-pink-500', 'bg-pink-50', 'dark:bg-pink-950/50', 'text-pink-700', 'dark:text-pink-300', 'shadow-sm');
+                    b.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
                 });
-                btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
-                btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-300');
+                btn.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+                btn.classList.add('border-pink-500', 'bg-pink-50', 'dark:bg-pink-950/50', 'text-pink-700', 'dark:text-pink-300', 'shadow-sm');
                 selectedExam = btn.getAttribute('data-exam');
             });
         });
@@ -412,7 +412,7 @@ You must return a valid JSON object strictly matching this schema with no markdo
   "instagramCaption": "Engaging Instagram caption with hashtags for medical entrance aspirants."
 }`;
 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${userApiKey}`;
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey}`;
                 
                 const payload = {
                     contents: [{ parts: [{ text: promptText }] }],
@@ -492,9 +492,9 @@ You must return a valid JSON object strictly matching this schema with no markdo
             for (let i = 1; i <= 3; i++) {
                 const btn = document.getElementById(`tab-btn-${i}`);
                 if (i === index) {
-                    btn.className = "slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white transition shadow-sm";
+                    btn.className = "slide-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-pink-600 text-white transition shadow-sm whitespace-nowrap";
                 } else {
-                    btn.className = "slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+                    btn.className = "slide-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition whitespace-nowrap";
                 }
             }
             renderSlide(index);
@@ -504,56 +504,60 @@ You must return a valid JSON object strictly matching this schema with no markdo
             if (!generatedData) return;
             const container = document.getElementById('slide-content-view');
             const counter = document.getElementById('slide-counter');
-            document.getElementById('badge-exam').innerText = selectedExam + ' • PSM High Yield';
+            const actionHint = document.getElementById('slide-action-hint');
+            document.getElementById('badge-exam').innerText = selectedExam + ' • High Yield';
             counter.innerText = `Slide ${index} / 3`;
 
             if (index === 1) {
+                actionHint.innerText = "Swipe for explanation ➡️";
                 let optionsHtml = generatedData.options.map(opt => `
-                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-2.5 text-xs font-medium text-slate-200">
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 text-xs font-semibold text-slate-200 shadow-sm">
                         ${opt}
                     </div>
                 `).join('');
 
                 container.innerHTML = `
-                    <div class="space-y-3">
-                        <span class="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">Question of the Day</span>
-                        <h4 class="text-sm sm:text-base font-semibold leading-snug text-slate-100">${generatedData.question}</h4>
-                        <div class="space-y-2 pt-1">
+                    <div class="space-y-2.5">
+                        <span class="inline-block px-2.5 py-0.5 rounded-md bg-pink-500/20 text-pink-400 text-[10px] font-extrabold uppercase tracking-wider">Question of the Day</span>
+                        <h4 class="text-xs sm:text-sm font-bold leading-snug text-slate-100">${generatedData.question}</h4>
+                        <div class="space-y-1.5 pt-0.5">
                             ${optionsHtml}
                         </div>
                     </div>
                 `;
             } else if (index === 2) {
+                actionHint.innerText = "Swipe for distractors ➡️";
                 container.innerHTML = `
                     <div class="space-y-3">
                         <div class="flex items-center space-x-2">
-                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">
+                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px]">
                                 <i class="fa-solid fa-check"></i>
                             </div>
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Correct Answer</span>
+                            <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Correct Answer</span>
                         </div>
-                        <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3 text-xs font-semibold text-emerald-300">
+                        <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2.5 text-xs font-bold text-emerald-300">
                             ${generatedData.correctAnswer}
                         </div>
                         <div class="space-y-1">
-                            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Explanation</p>
-                            <p class="text-xs text-slate-200 leading-relaxed max-h-40 overflow-y-auto pr-1">${generatedData.correctExplanation}</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rationale</p>
+                            <p class="text-xs text-slate-200 leading-relaxed max-h-36 overflow-y-auto pr-1 font-medium">${generatedData.correctExplanation}</p>
                         </div>
                     </div>
                 `;
             } else if (index === 3) {
+                actionHint.innerText = "Save & Share Daily 📌";
                 container.innerHTML = `
-                    <div class="space-y-3">
+                    <div class="space-y-2.5">
                         <div class="space-y-1">
                             <p class="text-[10px] font-bold text-rose-400 uppercase tracking-wider">Distractor Analysis</p>
-                            <p class="text-[11px] text-slate-300 leading-relaxed max-h-24 overflow-y-auto">${generatedData.distractorAnalysis}</p>
+                            <p class="text-[11px] text-slate-300 leading-relaxed max-h-24 overflow-y-auto font-medium">${generatedData.distractorAnalysis}</p>
                         </div>
-                        <div class="space-y-1 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-                            <div class="flex items-center space-x-1.5 text-amber-400 font-bold text-[11px]">
+                        <div class="space-y-1 bg-amber-500/10 border border-amber-500/30 rounded-xl p-2.5">
+                            <div class="flex items-center space-x-1.5 text-amber-400 font-bold text-[10px]">
                                 <i class="fa-solid fa-bolt"></i>
-                                <span>High-Yield Exam Pearl</span>
+                                <span>Exam Pearl</span>
                             </div>
-                            <p class="text-xs text-amber-200 leading-relaxed font-medium">${generatedData.examPearl}</p>
+                            <p class="text-[11px] text-amber-200 leading-relaxed font-semibold">${generatedData.examPearl}</p>
                         </div>
                     </div>
                 `;
@@ -567,7 +571,7 @@ ${generatedData.question}
 Options:
 ${generatedData.options.join('\n')}
 
-=== SLIDE 2: CORRECT ANSWER & EXPLANATION ===
+=== SLIDE 2: CORRECT ANSWER & RATIONALE ===
 Correct Answer: ${generatedData.correctAnswer}
 Explanation: ${generatedData.correctExplanation}
 
@@ -580,6 +584,35 @@ ${generatedData.instagramCaption}`;
 
             document.getElementById('export-text-area').value = fullText;
         }
+
+        // Direct Slide Downloader using html2canvas
+        document.getElementById('download-slide-btn').addEventListener('click', async () => {
+            const slideElement = document.getElementById('instagram-slide-canvas');
+            const btnText = document.getElementById('download-btn-text');
+            
+            btnText.innerText = "Rendering Image...";
+            
+            try {
+                const canvas = await html2canvas(slideElement, {
+                    scale: 3, // High resolution for crystal clear Instagram carousels
+                    useCORS: true,
+                    backgroundColor: null
+                });
+                
+                const image = canvas.toDataURL("image/png");
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = `PSM_${selectedExam.replace(/\s+/g, '_')}_Slide_${currentSlideIndex}.png`;
+                link.click();
+                
+                showToast(`Slide ${currentSlideIndex} downloaded successfully!`);
+            } catch (err) {
+                console.error(err);
+                showToast("Failed to download image. Try again.");
+            } finally {
+                btnText.innerText = `📥 Download Current Slide (PNG)`;
+            }
+        });
 
         // Copy All Button
         document.getElementById('copy-all-btn').addEventListener('click', () => {
@@ -625,22 +658,22 @@ ${generatedData.instagramCaption}`;
                 listContainer.innerHTML = `
                     <div class="text-center py-12 text-slate-400 space-y-2">
                         <i class="fa-regular fa-bookmark text-3xl"></i>
-                        <p class="text-sm">Your saved vault is empty. Save generated posts to review anytime!</p>
+                        <p class="text-xs">Your saved vault is empty. Save generated posts to review anytime!</p>
                     </div>
                 `;
                 return;
             }
 
             listContainer.innerHTML = savedVault.map(item => `
-                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 space-y-2">
+                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-2">
                     <div class="flex items-center justify-between text-xs text-slate-500">
-                        <span class="font-semibold text-emerald-600 dark:text-emerald-400">${item.exam} • ${item.topic}</span>
+                        <span class="font-bold text-pink-600 dark:text-pink-400">${item.exam} • ${item.topic}</span>
                         <span>${item.date}</span>
                     </div>
-                    <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 line-clamp-2">${item.data.question}</p>
+                    <p class="text-xs font-bold text-slate-800 dark:text-slate-200 line-clamp-2">${item.data.question}</p>
                     <div class="flex items-center justify-end space-x-2 pt-2">
-                        <button onclick="loadVaultItem(${item.id})" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-500 transition">Load to Studio</button>
-                        <button onclick="deleteVaultItem(${item.id})" class="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-xs font-medium hover:bg-rose-100 transition">Delete</button>
+                        <button onclick="loadVaultItem(${item.id})" class="px-3 py-1.5 rounded-xl bg-pink-600 text-white text-xs font-bold hover:bg-pink-500 transition">Load to Studio</button>
+                        <button onclick="deleteVaultItem(${item.id})" class="px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 text-xs font-bold hover:bg-rose-100 transition">Delete</button>
                     </div>
                 </div>
             `).join('');

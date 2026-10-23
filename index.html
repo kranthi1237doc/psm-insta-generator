@@ -117,4 +117,35 @@
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-200 mb-2">No Question Generated Yet</h3>
-                <p class="text-sm text-slate-400 max-w-
+                <p class="text-sm text-slate-400 max-w-md mb-6">Select your topic parameters on the left and click <span class="text-teal-400 font-medium">Generate Daily Slides</span> to create your high-yield carousel content.</p>
+            </div>
+
+            <!-- Slides Display Container (Hidden Initially) -->
+            <div id="slidesContainer" class="hidden space-y-8">
+                
+                <!-- Action Toolbar -->
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-wrap justify-between items-center gap-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                            <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> Ready to Publish
+                        </span>
+                        <span id="badgeTopic" class="text-xs text-slate-400 font-medium truncate max-w-[200px] sm:max-w-xs"></span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="saveCurrentToVault()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-2 rounded-xl text-xs font-semibold transition border border-slate-700 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-bookmark text-amber-400"></i>
+                            <span>Save to Vault</span>
+                        </button>
+                        <button onclick="copyCaption()" class="bg-teal-600 hover:bg-teal-500 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md shadow-teal-600/20 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-copy"></i>
+                            <span>Copy Caption</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CAROUSEL SLIDES (1080x1080 Aspect Ratio Simulation) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- SLIDE 1: QUESTION -->
+                    <div class="flex flex-col space-y-3">
+                        <div class="flex justify-between items-center

@@ -162,10 +162,10 @@
                                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">NBEMS / NEET PG</span>
                             </div>
 
-                            <!-- Question Content -->
-                            <div class="my-auto z-10 space-y-4">
-                                <h3 id="s1QuestionText" class="text-sm sm:text-base font-bold text-slate-100 leading-snug">Loading question...</h3>
-                                <div id="s1OptionsList" class="space-y-1.5 text-xs text-slate-300">
+                            <!-- Question Content - Increased font sizes -->
+                            <div class="my-auto z-10 space-y-3">
+                                <h3 id="s1QuestionText" class="text-base sm:text-lg font-bold text-slate-100 leading-snug">Loading question...</h3>
+                                <div id="s1OptionsList" class="space-y-1.5 text-xs sm:text-sm font-semibold text-slate-200">
                                     <!-- Options injected here -->
                                 </div>
                             </div>
@@ -408,7 +408,6 @@ You MUST respond with a valid JSON object ONLY, containing these exact keys:
 
             } catch (err) {
                 console.warn("API Call failed or no key present. Using smart fallback generator. Error:", err.message);
-                // Fallback high-yield PSM question so user is never stuck
                 parsedData = {
                     topic_tag: topic === 'Random High-Yield Concept' ? 'Iceberg of Disease - Epidemiology' : topic,
                     question: "Which of the following levels of prevention includes 'Disability Limitation' as its core intervention strategy?",
@@ -444,7 +443,7 @@ You MUST respond with a valid JSON object ONLY, containing these exact keys:
             optionsContainer.innerHTML = '';
             data.options.forEach(opt => {
                 const div = document.createElement('div');
-                div.className = 'bg-slate-950/60 border border-slate-800/80 rounded-xl px-3 py-2 font-medium';
+                div.className = 'bg-slate-950/60 border border-slate-800/80 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-200';
                 div.innerText = opt;
                 optionsContainer.appendChild(div);
             });
@@ -502,7 +501,7 @@ You MUST respond with a valid JSON object ONLY, containing these exact keys:
             }
         }
 
-        // NATIVE HTML5 CANVAS SLIDE DOWNLOADER
+        // NATIVE HTML5 CANVAS SLIDE DOWNLOADER WITH LARGER QUESTION FONT SIZE
         function downloadSlide(slideNum) {
             if (!currentGeneratedData) return;
 
@@ -549,23 +548,24 @@ You MUST respond with a valid JSON object ONLY, containing these exact keys:
             ctx.stroke();
 
             if (slideNum === 1) {
+                // Increased question font size to bold 38px with 50px line spacing
                 ctx.fillStyle = '#f8fafc';
-                ctx.font = 'bold 32px "Plus Jakarta Sans", sans-serif';
-                wrapText(ctx, currentGeneratedData.question, 100, 240, 880, 46);
+                ctx.font = 'bold 38px "Plus Jakarta Sans", sans-serif';
+                wrapText(ctx, currentGeneratedData.question, 100, 235, 880, 50);
 
-                let startY = 460;
+                let startY = 470;
                 currentGeneratedData.options.forEach((opt) => {
                     ctx.fillStyle = '#090d16';
                     ctx.beginPath();
-                    ctx.roundRect(100, startY, 880, 90, 16);
+                    ctx.roundRect(100, startY, 880, 85, 16);
                     ctx.fill();
                     ctx.strokeStyle = '#1e293b';
                     ctx.stroke();
 
-                    ctx.fillStyle = '#cbd5e1';
-                    ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
                     wrapText(ctx, opt, 130, startY + 52, 820, 30);
-                    startY += 110;
+                    startY += 100;
                 });
             } else if (slideNum === 2) {
                 ctx.fillStyle = '#10b981';

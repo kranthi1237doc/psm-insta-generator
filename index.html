@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSM InstaPrep - Community Medicine Content Generator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        },
+                        teal: {
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .slide-card {
+            aspect-ratio: 4 / 5;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+                    <i class="fa-solid fa-stethoscope text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">PSM InstaPrep</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">NEET PG • INI-CET • FMGE Daily MCQ Studio</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition" title="Toggle Theme">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block"></i>
+                </button>
+                <button id="nav-history" class="px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-sm font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span class="hidden sm:inline">Saved Vault</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Panel: Generator Controls (5 Cols) -->
+        <section class="lg:col-span-5 space-y-6">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-4">
+                    <h2 class="text-base font-semibold flex items-center space-x-2">
+                        <i class="fa-solid fa-sliders text-emerald-600 dark:text-emerald-400"></i>
+                        <span>Content Configuration</span>
+                    </h2>
+                    <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-medium">AI Powered</span>
+                </div>
+
+                <!-- Topic Selector -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">PSM Topic of Interest</label>
+                    <select id="psm-topic" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="Biostatistics & Epidemiology">📊 Biostatistics & Epidemiology</option>
+                        <option value="Screening of Diseases & Natural History">🔍 Screening of Diseases & Natural History</option>
+                        <option value="National Health Programs (NHP)">🇮🇳 National Health Programs (NHP)</option>
+                        <option value="Maternal & Child Health (RMNCH+A)">👶 Maternal & Child Health (RMNCH+A)</option>
+                        <option value="Occupational Health & Environment">🏭 Occupational Health & Environment</option>
+                        <option value="Communicable & Non-Communicable Diseases">🦠 Communicable & Non-Communicable Diseases</option>
+                        <option value="Nutrition & Health">🥗 Nutrition & Health</option>
+                        <option value="Healthcare Delivery System & Biomedical Waste Management">🏥 Healthcare Delivery & BMW Management</option>
+                        <option value="Demography & Family Planning">📈 Demography & Family Planning</option>
+                    </select>
+                </div>
+
+                <!-- Exam Focus -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Target Examination Focus</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" data-exam="NEET PG" class="exam-btn px-3 py-2 rounded-xl border border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold transition text-center">NEET PG</button>
+                        <button type="button" data-exam="INI-CET" class="exam-btn px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold transition text-center">INI-CET</button>
+                        <button type="button" data-exam="FMGE" class="exam-btn px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold transition text-center">FMGE</button>
+                    </div>
+                </div>
+
+                <!-- Question Difficulty/Style -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Question Style & Yield</label>
+                    <select id="q-style" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="Clinical Vignette / Scenario Based">Clinical Vignette / Scenario Based (High Yield)</option>
+                        <option value="Direct Fact / Data / Statistic Based">Direct Fact / Data / Statistic Based</option>
+                        <option value="Assertion & Reason / Statement Based">Assertion & Reason / Statement Based</option>
+                    </select>
+                </div>
+
+                <!-- Custom Prompt Note (Optional) -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Specific Sub-topic / Keyword (Optional)</label>
+                    <input type="text" id="custom-keyword" placeholder="e.g. Odds Ratio, Cold Chain, P-value..." class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+
+                <!-- Generate Action Button -->
+                <button id="generate-btn" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-lg shadow-emerald-600/25 hover:from-emerald-500 hover:to-teal-500 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Generate Instagram Post Slides</span>
+                </button>
+            </div>
+
+            <!-- Tips Card -->
+            <div class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-800 dark:to-slate-800/80 rounded-2xl p-5 border border-emerald-100 dark:border-slate-700 space-y-3">
+                <div class="flex items-center space-x-2 text-emerald-700 dark:text-emerald-400 font-semibold text-sm">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span>Creator Growth Strategy</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Posting daily 3-slide carousels builds high engagement and saves storage for medical aspirants. Slide 1 hooks them with a realistic clinical question, Slide 2 rewards them with the core concept, and Slide 3 masters distractor elimination plus an exam pearl!
+                </p>
+            </div>
+        </section>
+
+        <!-- Right Panel: Slide Preview & Copy Tools (7 Cols) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Placeholder / Loading State -->
+            <div id="loading-state" class="hidden bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-12 text-center space-y-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto text-2xl animate-spin">
+                    <i class="fa-solid fa-circle-notch"></i>
+                </div>
+                <div class="space-y-1">
+                    <h3 class="font-semibold text-base">Generating High-Yield PSM Content...</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Consulting AI with latest NBEMS / NEET PG exam patterns</p>
+                </div>
+            </div>
+
+            <!-- Initial Empty State -->
+            <div id="empty-state" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-12 text-center space-y-4">
+                <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 flex items-center justify-center mx-auto text-2xl">
+                    <i class="fa-solid fa-images"></i>
+                </div>
+                <div class="space-y-1 max-w-sm mx-auto">
+                    <h3 class="font-semibold text-base">No Slide Generated Yet</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Select your topic and exam focus on the left, then click Generate to create your ready-to-post Instagram carousel.</p>
+                </div>
+            </div>
+
+            <!-- Result Container (Hidden by default) -->
+            <div id="result-container" class="hidden space-y-6">
+                
+                <!-- Carousel Header / Slide Navigation -->
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="switchSlide(1)" id="tab-btn-1" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white transition shadow-sm">Slide 1: Question</button>
+                        <button onclick="switchSlide(2)" id="tab-btn-2" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Slide 2: Answer</button>
+                        <button onclick="switchSlide(3)" id="tab-btn-3" class="slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition">Slide 3: Distractors</button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button id="save-vault-btn" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 text-xs font-medium transition flex items-center space-x-1.5" title="Save to Vault">
+                            <i class="fa-regular fa-bookmark"></i>
+                            <span>Save</span>
+                        </button>
+                        <button id="regenerate-slide-btn" class="px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-medium hover:bg-emerald-100 transition flex items-center space-x-1.5">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Instagram Slide Canvas (Visual Simulation) -->
+                <div class="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl text-white slide-card flex flex-col justify-between overflow-hidden border border-slate-700">
+                    
+                    <!-- Decorative background grid or glow -->
+                    <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Slide Top Branding Header -->
+                    <div class="flex items-center justify-between z-10">
+                        <div class="flex items-center space-x-2 bg-slate-800/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700">
+                            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                            <span id="badge-exam" class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">NEET PG / FMGE</span>
+                        </div>
+                        <span id="slide-counter" class="text-xs font-semibold text-slate-400 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">Slide 1 / 3</span>
+                    </div>
+
+                    <!-- Slide Body Content -->
+                    <div id="slide-content-view" class="my-auto py-4 z-10 space-y-4">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Slide Footer Branding -->
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-[11px] text-slate-400 z-10">
+                        <span class="font-medium text-slate-300">@PSM_InstaPrep</span>
+                        <span>Swipe for Explanation ➡️</span>
+                    </div>
+                </div>
+
+                <!-- Copy & Export Toolkit -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-semibold text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-clipboard-check text-emerald-600 dark:text-emerald-400"></i>
+                            <span>Instagram Caption & Slide Text Export</span>
+                        </h3>
+                        <button id="copy-all-btn" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center space-x-2 shadow-sm">
+                            <i class="fa-solid fa-copy"></i>
+                            <span>Copy Full Post Content</span>
+                        </button>
+                    </div>
+
+                    <!-- Textarea for review / copy -->
+                    <div class="relative">
+                        <textarea id="export-text-area" rows="6" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-4 text-xs font-mono text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y" readonly></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Saved Vault Modal -->
+    <div id="vault-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-bookmark text-emerald-600 dark:text-emerald-400"></i>
+                    <h3 class="font-bold text-base">Saved Questions Vault</h3>
+                </div>
+                <button id="close-vault-btn" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 flex items-center justify-center text-slate-500 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="vault-list-container" class="p-6 overflow-y-auto space-y-4 flex-1">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-2xl font-medium text-xs flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-sm"></i>
+        <span id="toast-msg">Copied successfully!</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // State Management
+        let currentSlideIndex = 1;
+        let generatedData = null;
+        let savedVault = JSON.parse(localStorage.getItem('psm_vault') || '[]');
+        let selectedExam = 'NEET PG';
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Exam Selector Buttons
+        const examBtns = document.querySelectorAll('.exam-btn');
+        examBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                examBtns.forEach(b => {
+                    b.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-300');
+                    b.classList.add('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+                });
+                btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-slate-50', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+                btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-300');
+                selectedExam = btn.getAttribute('data-exam');
+            });
+        });
+
+        // Generate Button Handler
+        const generateBtn = document.getElementById('generate-btn');
+        generateBtn.addEventListener('click', async () => {
+            const topic = document.getElementById('psm-topic').value;
+            const style = document.getElementById('q-style').value;
+            const keyword = document.getElementById('custom-keyword').value.trim();
+
+            showLoading(true);
+
+            try {
+                const promptText = `Generate a high-yield multiple-choice question (MCQ) for ${selectedExam} aspirants in Community Medicine (PSM).
+Topic: ${topic}
+Style: ${style}
+${keyword ? 'Specific Keyword/Subtopic: ' + keyword : ''}
+
+You must return a valid JSON object strictly matching this schema with no markdown code blocks around it:
+{
+  "question": "The clinical scenario or question text here.",
+  "options": [
+    "A) Option 1",
+    "B) Option 2",
+    "C) Option 3",
+    "D) Option 4"
+  ],
+  "correctAnswer": "A) Option 1",
+  "correctExplanation": "Detailed explanation of why this option is correct, referencing standard PSM textbooks like Park's Preventive and Social Medicine.",
+  "distractorAnalysis": "Detailed explanation of why the other options (distractors) are incorrect.",
+  "examPearl": "High-yield one-liner exam pearl for NEET PG / INI-CET / FMGE.",
+  "instagramCaption": "Engaging Instagram caption with hashtags for medical entrance aspirants."
+}`;
+
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: promptText }] }],
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
+                };
+
+                let response = null;
+                let attempts = 0;
+                let delay = 1000;
+
+                while (attempts < 4) {
+                    try {
+                        const res = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (res.ok) {
+                            response = await res.json();
+                            break;
+                        }
+                    } catch (e) {
+                        // retry with exponential backoff
+                    }
+                    attempts++;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+
+                if (!response || !response.candidates || response.candidates.length === 0) {
+                    throw new Error("Failed to generate content from AI.");
+                }
+
+                const rawJsonText = response.candidates[0].content.parts[0].text;
+                generatedData = JSON.parse(rawJsonText);
+                
+                showLoading(false);
+                renderSlide(1);
+                updateExportText();
+
+                document.getElementById('empty-state').classList.add('hidden');
+                document.getElementById('result-container').classList.remove('hidden');
+                showToast("New carousel slides generated successfully!");
+
+            } catch (err) {
+                console.error(err);
+                showLoading(false);
+                alert("Error generating content. Please try again.");
+            }
+        });
+
+        function showLoading(isLoading) {
+            const loadingState = document.getElementById('loading-state');
+            const emptyState = document.getElementById('empty-state');
+            const resultContainer = document.getElementById('result-container');
+
+            if (isLoading) {
+                loadingState.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                resultContainer.classList.add('hidden');
+            } else {
+                loadingState.classList.add('hidden');
+            }
+        }
+
+        function switchSlide(index) {
+            currentSlideIndex = index;
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`tab-btn-${i}`);
+                if (i === index) {
+                    btn.className = "slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white transition shadow-sm";
+                } else {
+                    btn.className = "slide-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 transition";
+                }
+            }
+            renderSlide(index);
+        }
+
+        function renderSlide(index) {
+            if (!generatedData) return;
+            const container = document.getElementById('slide-content-view');
+            const counter = document.getElementById('slide-counter');
+            document.getElementById('badge-exam').innerText = selectedExam + ' • PSM High Yield';
+            counter.innerText = `Slide ${index} / 3`;
+
+            if (index === 1) {
+                let optionsHtml = generatedData.options.map(opt => `
+                    <div class="bg-slate-800/90 border border-slate-700/80 rounded-xl p-2.5 text-xs font-medium text-slate-200">
+                        ${opt}
+                    </div>
+                `).join('');
+
+                container.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">Question of the Day</span>
+                        <h4 class="text-sm sm:text-base font-semibold leading-snug text-slate-100">${generatedData.question}</h4>
+                        <div class="space-y-2 pt-1">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            } else if (index === 2) {
+                container.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Correct Answer</span>
+                        </div>
+                        <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3 text-xs font-semibold text-emerald-300">
+                            ${generatedData.correctAnswer}
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Explanation</p>
+                            <p class="text-xs text-slate-200 leading-relaxed max-h-40 overflow-y-auto pr-1">${generatedData.correctExplanation}</p>
+                        </div>
+                    </div>
+                `;
+            } else if (index === 3) {
+                container.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <p class="text-[10px] font-bold text-rose-400 uppercase tracking-wider">Distractor Analysis</p>
+                            <p class="text-[11px] text-slate-300 leading-relaxed max-h-24 overflow-y-auto">${generatedData.distractorAnalysis}</p>
+                        </div>
+                        <div class="space-y-1 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+                            <div class="flex items-center space-x-1.5 text-amber-400 font-bold text-[11px]">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>High-Yield Exam Pearl</span>
+                            </div>
+                            <p class="text-xs text-amber-200 leading-relaxed font-medium">${generatedData.examPearl}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateExportText() {
+            if (!generatedData) return;
+            const fullText = `=== SLIDE 1: QUESTION ===
+${generatedData.question}
+Options:
+${generatedData.options.join('\n')}
+
+=== SLIDE 2: CORRECT ANSWER & EXPLANATION ===
+Correct Answer: ${generatedData.correctAnswer}
+Explanation: ${generatedData.correctExplanation}
+
+=== SLIDE 3: DISTRACTORS & EXAM PEARL ===
+Distractor Analysis: ${generatedData.distractorAnalysis}
+Exam Pearl: ${generatedData.examPearl}
+
+=== INSTAGRAM CAPTION ===
+${generatedData.instagramCaption}`;
+
+            document.getElementById('export-text-area').value = fullText;
+        }
+
+        // Copy All Button
+        document.getElementById('copy-all-btn').addEventListener('click', () => {
+            const textArea = document.getElementById('export-text-area');
+            textArea.select();
+            document.execCommand('copy');
+            showToast("Full post content copied to clipboard!");
+        });
+
+        // Regenerate slide button
+        document.getElementById('regenerate-slide-btn').addEventListener('click', () => {
+            generateBtn.click();
+        });
+
+        // Save to Vault
+        document.getElementById('save-vault-btn').addEventListener('click', () => {
+            if (!generatedData) return;
+            const item = {
+                id: Date.now(),
+                exam: selectedExam,
+                topic: document.getElementById('psm-topic').value,
+                data: generatedData,
+                date: new Date().toLocaleDateString()
+            };
+            savedVault.unshift(item);
+            localStorage.setItem('psm_vault', JSON.stringify(savedVault));
+            showToast("Saved to your question vault!");
+        });
+
+        // Vault Modal Control
+        const vaultModal = document.getElementById('vault-modal');
+        document.getElementById('nav-history').addEventListener('click', () => {
+            renderVaultList();
+            vaultModal.classList.remove('hidden');
+        });
+        document.getElementById('close-vault-btn').addEventListener('click', () => {
+            vaultModal.classList.add('hidden');
+        });
+
+        function renderVaultList() {
+            const listContainer = document.getElementById('vault-list-container');
+            if (savedVault.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-400 space-y-2">
+                        <i class="fa-regular fa-bookmark text-3xl"></i>
+                        <p class="text-sm">Your saved vault is empty. Save generated posts to review anytime!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = savedVault.map(item => `
+                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-500">
+                        <span class="font-semibold text-emerald-600 dark:text-emerald-400">${item.exam} • ${item.topic}</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 dark:text-slate-200 line-clamp-2">${item.data.question}</p>
+                    <div class="flex items-center justify-end space-x-2 pt-2">
+                        <button onclick="loadVaultItem(${item.id})" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-medium hover:bg-emerald-500 transition">Load to Studio</button>
+                        <button onclick="deleteVaultItem(${item.id})" class="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/30 text-rose-600 text-xs font-medium hover:bg-rose-100 transition">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.loadVaultItem = function(id) {
+            const item = savedVault.find(v => v.id === id);
+            if (item) {
+                generatedData = item.data;
+                selectedExam = item.exam;
+                vaultModal.classList.add('hidden');
+                document.getElementById('empty-state').classList.add('hidden');
+                document.getElementById('result-container').classList.remove('hidden');
+                switchSlide(1);
+                updateExportText();
+                showToast("Loaded saved question into studio!");
+            }
+        };
+
+        window.deleteVaultItem = function(id) {
+            savedVault = savedVault.filter(v => v.id !== id);
+            localStorage.setItem('psm_vault', JSON.stringify(savedVault));
+            renderVaultList();
+            showToast("Removed from vault.");
+        };
+
+        // Toast Notification Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
